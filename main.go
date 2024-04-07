@@ -5,13 +5,17 @@ import (
 	"gin-clean-architecture-api/pkg/infrastructure/router"
 	"gin-clean-architecture-api/pkg/interfaces/handler"
 	"gin-clean-architecture-api/pkg/usecase"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func main() {
-	dsn := "user:password@tcp(localhost:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	// db起動待ち(マジックナンバーなのであまり良くない)
+	time.Sleep(time.Second * 5)
+
+	dsn := "root:password@tcp(CleanArchSampleDB)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")

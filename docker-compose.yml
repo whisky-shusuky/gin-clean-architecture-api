@@ -13,6 +13,8 @@ services:
       - DB_USER=user
       - DB_PASSWORD=password
       - DB_NAME=dbname
+    volumes:
+      - .:/app
 
   db:
     image: mysql:5.7

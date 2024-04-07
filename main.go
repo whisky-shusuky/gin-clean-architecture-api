@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gin-clean-architecture-api/pkg/domain"
 	"gin-clean-architecture-api/pkg/infrastructure/persistence"
 	"gin-clean-architecture-api/pkg/infrastructure/router"
 	"gin-clean-architecture-api/pkg/interfaces/handler"
@@ -13,13 +14,16 @@ import (
 
 func main() {
 	// db起動待ち(マジックナンバーなのであまり良くない)
-	time.Sleep(time.Second * 5)
+	time.Sleep(time.Second * 10)
 
 	dsn := "root:password@tcp(CleanArchSampleDB)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	// AutoMigrate
+	db.AutoMigrate(&domain.Shop{})
 
 	// Get the underlying SQL DB instance
 	sqlDB, err := db.DB()
